@@ -1,0 +1,45 @@
+<package>
+  <name>geometric_shapes</name>
+  <version>1.0.0</version>
+  <description>The geometric shapes package provides implementations of basic geometric primitives. It can be used for collision checking, ray intersection and other operations with geoemtric primitives.</description>
+  <maintainer email="">Ioan Sucan</maintainer>
+
+  <license>BSD</license>
+
+  <url type="website">http://ros.org/wiki/geometric_shapes</url>
+  <!-- <url type="bugtracker"></url> -->
+
+  <author>Ioan Sucan</author>
+
+  <!-- Dependencies which this package needs to build itself. -->
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <!-- Dependencies needed to compile this package. -->
+  <build_depend>rosconsole</build_depend>
+  <build_depend>resource_retriever</build_depend>
+  <build_depend>visualization_msgs</build_depend>
+  <build_depend>random_numbers</build_depend>
+  <build_depend>shape_msgs</build_depend>
+  <build_depend>shape_tools</build_depend>
+
+  <!-- Dependencies needed after this package is compiled. -->
+  <run_depend>rosconsole</run_depend>
+  <run_depend>resource_retriever</run_depend>
+  <run_depend>visualization_msgs</run_depend>
+  <run_depend>random_numbers</run_depend>
+  <run_depend>shape_msgs</run_depend>
+  <run_depend>shape_tools</run_depend>
+
+  <!-- Dependencies needed only for running tests. -->
+  <!-- <test_depend>rosconsole</test_depend> -->
+  <!-- <test_depend>resource_retriever</test_depend> -->
+  <!-- <test_depend>visualization_msgs</test_depend> -->
+  <!-- <test_depend>random_numbers</test_depend> -->
+  <!-- <test_depend>shape_msgs</test_depend> -->
+  <!-- <test_depend>shape_tools</test_depend> -->
+
+<export>
+    <cpp lflags="-Wl,-rpath,${prefix}/lib -L${prefix}/lib -lgeometric_shapes" cflags="-I${prefix}/include `rosboost-cfg --cflags`"/>
+</export>
+
+</package>

@@ -1,5 +1,17 @@
-cmake_minimum_required(VERSION 2.4.6)
-include($ENV{ROS_ROOT}/core/rosbuild/rosbuild.cmake)
+# Catkin User Guide: http://www.ros.org/doc/groovy/api/catkin/html/user_guide/user_guide.html
+# Catkin CMake Standard: http://www.ros.org/doc/groovy/api/catkin/html/user_guide/standards.html
+cmake_minimum_required(VERSION 2.8.3)
+project(geometric_shapes)
+# Load catkin and all dependencies required for this package
+# TODO: remove all from COMPONENTS that are not catkin packages.
+find_package(catkin REQUIRED COMPONENTS rosconsole resource_retriever visualization_msgs random_numbers shape_msgs shape_tools libqhull assimp eigen octomap console_bridge)
+
+# include_directories(include ${Boost_INCLUDE_DIR} ${catkin_INCLUDE_DIRS})
+# CATKIN_MIGRATION: removed during catkin migration
+# cmake_minimum_required(VERSION 2.4.6)
+
+# CATKIN_MIGRATION: removed during catkin migration
+# include($ENV{ROS_ROOT}/core/rosbuild/rosbuild.cmake)
 
 # Set the build type.  Options are:
 #  Coverage       : w/ debug symbols, w/o optimization, w/ code-coverage
@@ -11,7 +23,9 @@ include($ENV{ROS_ROOT}/core/rosbuild/rosbuild.cmake)
 
 set(ROS_BUILD_TYPE Release)
 
-rosbuild_init()
+
+# CATKIN_MIGRATION: removed during catkin migration
+# rosbuild_init()
 
 find_package(Eigen REQUIRED)
 include_directories(${EIGEN_INCLUDE_DIRS})
@@ -48,12 +62,14 @@ endif()
 
 find_library(QHULL_LIB qhull)
 
-rosbuild_add_boost_directories()
+
+# CATKIN_MIGRATION: removed during catkin migration
+# rosbuild_add_boost_directories()
 
 #set the default path for built libraries to the "lib" directory
 set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
 
-rosbuild_add_library(${PROJECT_NAME}
+add_library(${PROJECT_NAME}
   src/shapes.cpp
   src/shape_operations.cpp
   src/bodies.cpp
@@ -62,6 +78,21 @@ target_link_libraries(${PROJECT_NAME} ${ASSIMP_LIBRARIES} ${OCTOMAP_LIBRARIES} $
 
 
 # Unit tests
-rosbuild_add_gtest(test_point_inclusion test/test_point_inclusion.cpp)
+catkin_add_gtest(test_point_inclusion test/test_point_inclusion.cpp)
 target_link_libraries(test_point_inclusion ${PROJECT_NAME})
-rosbuild_link_boost(test_point_inclusion system filesystem)
+find_package(Boost REQUIRED COMPONENTS system filesystem)
+include_directories(${Boost_INCLUDE_DIRS})
+target_link_libraries(test_point_inclusion ${Boost_LIBRARIES})
+## Generate added messages and services with any dependencies listed here
+#generate_messages(
+#    #TODO DEPENDENCIES geometry_msgs std_msgs
+#)
+
+# catkin_package parameters: http://ros.org/doc/groovy/api/catkin/html/dev_guide/generated_cmake_api.html#catkin-package
+# TODO: fill in what other packages will need to use this package
+catkin_package(
+    DEPENDS rosconsole resource_retriever visualization_msgs random_numbers shape_msgs shape_tools libqhull assimp eigen octomap console_bridge
+    CATKIN_DEPENDS # TODO
+    INCLUDE_DIRS # TODO include
+    LIBRARIES # TODO
+)
